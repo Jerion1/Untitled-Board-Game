@@ -427,6 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 0.04
   ScrollSpeed: 0.5
+  ScrollSlowdown: 0.01
 --- !u!1 &2013415831
 GameObject:
   m_ObjectHideFlags: 0

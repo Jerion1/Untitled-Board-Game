@@ -4,9 +4,9 @@ public class CameraController : MonoBehaviour
 {
     public float Speed = 0.01f;
 
-    public float ScrollSpeed = 5f;
+    public float ScrollSpeed = 1f;
     private float ScrollMomentum = 0f;
-    public float ScrollSlowdown = 0.1f;
+    public float ScrollSlowdown = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +40,14 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            ScrollMomentum -= ScrollSlowdown;
-            if (ScrollMomentum <= 0)
+            if(ScrollMomentum > 0.1f)
+            {
+                ScrollMomentum -= ScrollSlowdown;
+            }else if(ScrollMomentum < -0.1f)
+            {
+                ScrollMomentum += ScrollSlowdown;
+            }
+            else
             {
                 ScrollMomentum = 0;
             }
