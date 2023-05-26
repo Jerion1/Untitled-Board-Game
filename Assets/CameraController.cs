@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     void Start()
     {
 
-
         // Make the rigid body not change rotation
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().freezeRotation = true;
@@ -23,7 +22,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            print("space key was pressed");
+            //print("space key was pressed");
         }
 
         float xAxisValue = Input.GetAxis("Horizontal") * Speed;
@@ -33,7 +32,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 pos = Camera.main.transform.position;
         float scrollInput = Input.mouseScrollDelta.y;
-        print(scrollInput);
+        //print(scrollInput);
         if (scrollInput != 0)
         {
             ScrollMomentum = scrollInput * ScrollSpeed;
@@ -53,7 +52,7 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        print(ScrollMomentum);
+        //print(ScrollMomentum);
         pos.y -= ScrollMomentum;
         pos.z += ScrollMomentum;
         Camera.main.transform.position = pos;

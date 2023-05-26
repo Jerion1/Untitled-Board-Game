@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 803799953}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Space
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,7 +309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803799948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.71, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 803799948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab31e2334cb288241bf9e71f42fae815, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c70101ed14010a48aee6cd86e0c1176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &963194225
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 0.04
-  ScrollSpeed: 0.5
+  ScrollSpeed: 0.2
   ScrollSlowdown: 0.01
 --- !u!1 &1449723348
 GameObject:
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 1449723349}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -460,6 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade939a76a8be594b8d296457572b6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  targetPosition: {x: 0, y: 0, z: 0}
+  smoothTime: 1
 --- !u!136 &1449723350
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -532,7 +535,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449723348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.95, z: 0}
+  m_LocalPosition: {x: 9.25, y: 0.95, z: 7.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -551,26 +554,14 @@ GameObject:
   - component: {fileID: 2013415835}
   - component: {fileID: 2013415834}
   - component: {fileID: 2013415833}
-  - component: {fileID: 2013415832}
+  - component: {fileID: 2013415837}
   m_Layer: 0
   m_Name: Plane (1)
-  m_TagString: Untagged
+  m_TagString: Space
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2013415832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013415831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab31e2334cb288241bf9e71f42fae815, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &2013415833
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -650,3 +641,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2013415837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013415831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c70101ed14010a48aee6cd86e0c1176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
