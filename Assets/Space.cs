@@ -6,6 +6,9 @@ public class Space : MonoBehaviour
     board board;
     public bool startSpace;
     public string[] neighbours;
+    public bool visited = false;
+
+    private bool canBeClicked;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,10 +19,12 @@ public class Space : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Clicked();
-        }
+        canBeClicked = true;
+        /*
+         if (Input.GetMouseButtonDown(0))
+         {
+             Clicked();
+         }*/
     }
 
 
@@ -31,13 +36,23 @@ public class Space : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
+
             //Debug.Log(hit.collider.gameObject.transform.position);
             var target = hit.collider.gameObject.name;
 
             var pos = hit.collider.gameObject.transform.position;
-            //Debug.Log(pos);
+            Debug.Log("pos: "+pos);
             //character.MovePlayer(pos);
             board.MoveToSpace(transform.name);
         }
+    }
+    private void OnMouseDown()
+    {
+        if (canBeClicked)
+        {
+            canBeClicked = false;
+            Clicked();
+        }
+
     }
 }
