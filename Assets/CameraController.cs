@@ -39,10 +39,11 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if(ScrollMomentum > 0.1f)
+            if (ScrollMomentum > 0.1f)
             {
                 ScrollMomentum -= ScrollSlowdown;
-            }else if(ScrollMomentum < -0.1f)
+            }
+            else if (ScrollMomentum < -0.1f)
             {
                 ScrollMomentum += ScrollSlowdown;
             }

@@ -68,8 +68,6 @@ public class board : MonoBehaviour
 
             print("Route found for: " + string.Join(", ", route));
         }
-
-
     }
 
     private List<int> GetBestNeighbour(int from)
@@ -78,8 +76,6 @@ public class board : MonoBehaviour
         List<int> BestDepthList = new List<int>();
         if (!transform.GetChild(from).GetComponent<Space>().visited)
         {
-
-
             string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
 
             for (int i = 0; i < neighbourNames.Length; i++)
@@ -146,75 +142,6 @@ public class board : MonoBehaviour
         print("newer Route: " + string.Join(", ", BestDepthList));
         return BestDepthList;
     }
-    /*
-    private List<int> GetNeighbours(int from)
-    {
-
-        int BestDepth = -1;
-        List<int> BestDepthList = new List<int>();
-
-        string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
-
-        iterations++;
-        if (iterations >= maxIterations)
-        {
-            BestDepthList.Clear();
-            BestDepthList.Add(-2);
-            //route.Add(targetSpace);
-            return BestDepthList;
-        }
-
-        //foreach (string name in neighbourNames)
-        for (int i = 0; i < 2; i++)
-        {
-            int id = GetChildID(neighbourNames[i]);
-            //print("id: " + id + ", target: " + targetSpace);
-            if (id == targetSpace)
-            {
-                //print("hit: ");
-                BestDepthList.Clear();
-                BestDepthList.Add(1);
-                BestDepthList.Add(id);
-                print("BestDepth: "+BestDepthList[0]);
-                //route.Add(targetSpace);
-                return BestDepthList;
-            }
-            else
-            {
-                //route.Add(id);
-
-                if (BestDepth < 0)
-                {
-                    BestDepthList = GetNeighbours(id);
-                    BestDepth = BestDepthList[0];
-                }
-                else
-                {
-                    List<int> temp = GetNeighbours(id);
-                    if (temp[0] != -2)
-                    {
-
-                        if (temp[0] < BestDepth)
-                        {
-                            BestDepthList = temp;
-                        }
-                    }
-
-                }
-            }
-        }
-        if (BestDepthList[0] < 0)
-        {
-            iterations--;
-        }
-        else
-        {
-            BestDepthList[0] += 1;
-            BestDepthList.Add(from);
-            print(BestDepthList[0]);
-        }
-        return BestDepthList;
-    }*/
 
     private int GetChildID(string spaceName)
     {

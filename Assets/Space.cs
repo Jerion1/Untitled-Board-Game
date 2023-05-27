@@ -20,11 +20,6 @@ public class Space : MonoBehaviour
     void Update()
     {
         canBeClicked = true;
-        /*
-         if (Input.GetMouseButtonDown(0))
-         {
-             Clicked();
-         }*/
     }
 
 
@@ -41,7 +36,7 @@ public class Space : MonoBehaviour
             var target = hit.collider.gameObject.name;
 
             var pos = hit.collider.gameObject.transform.position;
-            Debug.Log("pos: "+pos);
+            Debug.Log("pos: " + pos);
             //character.MovePlayer(pos);
             board.MoveToSpace(transform.name);
         }

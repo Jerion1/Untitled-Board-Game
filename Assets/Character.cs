@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
     Vector3 velocity;
     void Update()
     {
-        if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        if (Vector3.Distance(transform.position, targetPosition) > 0.02f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, speed);
         }
