@@ -52,6 +52,7 @@ public class board : MonoBehaviour
         else
         {
             ReturnList.Remove(0);
+            print("Route found length: " + ReturnList[0]);
             route = Enumerable.Reverse(ReturnList).ToList();
             print("Route found: " + route[0]);
         }
@@ -65,7 +66,7 @@ public class board : MonoBehaviour
         List<int> BestDepthList = new List<int>();
         if (!transform.GetChild(from).GetComponent<Space>().visited)
         {
-            transform.GetChild(from).GetComponent<Space>().visited = true;
+           
 
             string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
 
@@ -85,10 +86,13 @@ public class board : MonoBehaviour
                 else
                 {
                     print("find Neighbour Neighbour: " + id);
+                    transform.GetChild(from).GetComponent<Space>().visited = true;
                     List<int> temp = GetBestNeighbour(id);
+                    transform.GetChild(from).GetComponent<Space>().visited = false;
                     int tempDepth = temp[0];
                     if (tempDepth != -2)
                     {
+                        print("tempDepth: " + tempDepth+ ", BestDepth: " + BestDepth);
                         if (BestDepth == -1)
                         {
                             BestDepth = tempDepth;
@@ -96,6 +100,7 @@ public class board : MonoBehaviour
                         }
                         else if (BestDepth > tempDepth)
                         {
+
                             BestDepth = tempDepth;
                             BestDepthList = temp;
                         }
@@ -121,7 +126,7 @@ public class board : MonoBehaviour
             BestDepthList[0] += 1;
             BestDepthList.Add(from);
         }
-
+        print("go back");
         return BestDepthList;
     }
     /*
