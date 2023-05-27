@@ -10,7 +10,7 @@ public class board : MonoBehaviour
     private List<int> route;
 
     public int maxIterations = 10;
-    private int iterations = 0;
+    private int stepsLeft = 0;
 
 
 
@@ -35,7 +35,17 @@ public class board : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(stepsLeft > 0)
+        {
+            if (!character.gameObject.GetComponent<Character>().moving)
+            {
+                Vector3 pos = transform.GetChild(route[0]).position;
+                currentSpace = route[0];
+                route.RemoveAt(0);
+                stepsLeft--;
+                character.MovePlayer(pos); 
+            }
+        }
     }
 
     public void MoveToSpace(string childString)
@@ -51,8 +61,8 @@ public class board : MonoBehaviour
         }
         else
         {
-
-            print("Route found length: " + ReturnList[0]);
+            stepsLeft = ReturnList[0];
+            print("Route found length: " + stepsLeft);
             ReturnList.RemoveAt(0);
             route = Enumerable.Reverse(ReturnList).ToList();
 

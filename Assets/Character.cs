@@ -5,7 +5,7 @@ public class Character : MonoBehaviour
     public float speed = 10f;
     public Vector3 targetPosition;
     public float smoothTime = 0.5f;
-    private bool moving = false;
+    public bool moving = false;
     // private Vector3 movement;
     // Start is called before the first frame update
     void Start()
