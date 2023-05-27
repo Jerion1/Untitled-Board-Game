@@ -159,6 +159,7 @@ MonoBehaviour:
   neighbours:
   - Plane (2)
   - Plane (4)
+  visited: 0
 --- !u!64 &276352933
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -236,7 +237,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977138646}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -383,6 +384,7 @@ MonoBehaviour:
   neighbours:
   - Plane (3)
   - Plane
+  visited: 0
 --- !u!64 &723741109
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -483,6 +485,7 @@ MonoBehaviour:
   neighbours:
   - Plane (1)
   - Plane (3)
+  visited: 0
 --- !u!64 &743992338
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -560,7 +563,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977138646}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &803799948
 GameObject:
@@ -659,7 +662,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977138646}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &803799953
 MonoBehaviour:
@@ -677,6 +680,7 @@ MonoBehaviour:
   neighbours:
   - Plane (1)
   - Plane (4)
+  visited: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,10 +924,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 803799952}
   - {fileID: 2013415836}
   - {fileID: 743992341}
   - {fileID: 276352936}
-  - {fileID: 803799952}
   - {fileID: 723741107}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1038,7 +1042,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977138646}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2013415837
 MonoBehaviour:
@@ -1056,3 +1060,4 @@ MonoBehaviour:
   neighbours:
   - Plane (2)
   - Plane
+  visited: 0

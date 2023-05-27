@@ -17,8 +17,8 @@ public class board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-           character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+
+        character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -51,10 +51,12 @@ public class board : MonoBehaviour
         }
         else
         {
-            ReturnList.Remove(0);
+
             print("Route found length: " + ReturnList[0]);
+            ReturnList.RemoveAt(0);
             route = Enumerable.Reverse(ReturnList).ToList();
-            print("Route found: " + route[0]);
+
+            print("Route found for: " + string.Join(", ", route));
         }
 
 
@@ -66,7 +68,7 @@ public class board : MonoBehaviour
         List<int> BestDepthList = new List<int>();
         if (!transform.GetChild(from).GetComponent<Space>().visited)
         {
-           
+
 
             string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
 
@@ -92,41 +94,46 @@ public class board : MonoBehaviour
                     int tempDepth = temp[0];
                     if (tempDepth != -2)
                     {
-                        print("tempDepth: " + tempDepth+ ", BestDepth: " + BestDepth);
+                        print("tempDepth: " + tempDepth + ", BestDepth: " + BestDepth);
                         if (BestDepth == -1)
                         {
                             BestDepth = tempDepth;
                             BestDepthList = temp;
+                            BestDepthList.Add(id);
                         }
                         else if (BestDepth > tempDepth)
                         {
-
                             BestDepth = tempDepth;
                             BestDepthList = temp;
+                            BestDepthList.Add(id);
                         }
+                        
                     }
-                    //GetBestNeighbour(id);
                 }
             }
-
         }
         else
         {
             print("already Visited: " + from);
         }
+
         if (BestDepth == -1)
         {
             BestDepthList.Clear();
             BestDepthList.Add(-2);
-            //BestDepthList.Add(id);
+            //BestDepthList.Add(from);
 
         }
         else
         {
+            print("got Route: " + string.Join(", ", BestDepthList));
             BestDepthList[0] += 1;
-            BestDepthList.Add(from);
+
         }
         print("go back");
+        print("new Route: " + string.Join(", ", BestDepthList));
+        //BestDepthList.Add(from);
+        print("newer Route: " + string.Join(", ", BestDepthList));
         return BestDepthList;
     }
     /*
@@ -204,9 +211,10 @@ public class board : MonoBehaviour
         int ID = -1;
         for (int i = 0; i < transform.childCount; i++)
         {
-            //print("searchedForName: " + spaceName + ", name: " + transform.GetChild(i).name);
+
             if (spaceName == transform.GetChild(i).name)
             {
+                print("searchedForName: " + spaceName + ", id: " + i);
                 //print("ID Hit: " + i);
                 ID = i;
                 return ID;
