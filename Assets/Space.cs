@@ -43,11 +43,13 @@ public class Space : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (canBeClicked)
+        if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
         {
-            canBeClicked = false;
-            Clicked();
+            if (canBeClicked)
+            {
+                canBeClicked = false;
+                Clicked();
+            }
         }
-
     }
 }

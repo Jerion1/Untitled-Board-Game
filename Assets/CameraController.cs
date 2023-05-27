@@ -20,10 +20,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+       /* if (Input.GetKeyDown("space"))
         {
             //print("space key was pressed");
-        }
+        }*/
 
         float xAxisValue = Input.GetAxis("Horizontal") * Speed;
         float zAxisValue = Input.GetAxis("Vertical") * Speed;

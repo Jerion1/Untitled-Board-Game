@@ -1,21 +1,26 @@
 using UnityEngine;
 
+public enum CharacterState { waiting, moving };
+
 public class Character : MonoBehaviour
 {
     public float speed = 10f;
     public Vector3 targetPosition;
     public float smoothTime = 0.5f;
     public bool moving = false;
+    
+    public CharacterState charState;
+    
     // private Vector3 movement;
     // Start is called before the first frame update
     void Start()
     {
         //targetPosition = transform.position;
+        charState = CharacterState.waiting;
     }
 
     // Update is called once per frame
 
-    //public float speed = 10;
     Vector3 velocity;
     void Update()
     {
@@ -26,20 +31,19 @@ public class Character : MonoBehaviour
         else
         {
             transform.position = targetPosition;
-            if (moving)
+            if (charState == CharacterState.moving)
             {
-                moving = false;
+                charState = CharacterState.waiting;
             }
         }
     }
-
 
     public void MovePlayer(Vector3 goal)
     {
         //Debug.Log(x);
         goal.y += 0.95f;
         targetPosition = goal;
-        moving = true;
+        charState = CharacterState.moving;
         //transform.Translate(movement * speed * Time.deltaTime);
     }
 

@@ -12,12 +12,9 @@ public class board : MonoBehaviour
     public int maxIterations = 10;
     private int stepsLeft = 0;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-
         character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -35,15 +32,15 @@ public class board : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(stepsLeft > 0)
+        if (stepsLeft > 0)
         {
-            if (!character.gameObject.GetComponent<Character>().moving)
+            if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
             {
                 Vector3 pos = transform.GetChild(route[0]).position;
                 currentSpace = route[0];
                 route.RemoveAt(0);
                 stepsLeft--;
-                character.MovePlayer(pos); 
+                character.MovePlayer(pos);
             }
         }
     }
@@ -113,7 +110,7 @@ public class board : MonoBehaviour
                             BestDepthList = temp;
                             BestDepthList.Add(id);
                         }
-                        
+
                     }
                 }
             }

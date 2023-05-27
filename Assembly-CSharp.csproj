@@ -60,6 +60,7 @@
     <Compile Include="Assets\CameraController.cs" />
     <Compile Include="Assets\board.cs" />
     <Compile Include="Assets\Character.cs" />
+    <Compile Include="Assets\GameLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
