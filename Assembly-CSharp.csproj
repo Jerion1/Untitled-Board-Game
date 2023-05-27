@@ -59,6 +59,7 @@
     <Compile Include="Assets\CameraController.cs" />
     <Compile Include="Assets\Character.cs" />
     <Compile Include="Assets\Space.cs" />
+    <Compile Include="Assets\board.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
