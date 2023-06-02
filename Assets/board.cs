@@ -12,6 +12,8 @@ public class board : MonoBehaviour
     public int maxIterations = 10;
     private int stepsLeft = 0;
 
+    public GameObject SpacePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +34,10 @@ public class board : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (stepsLeft > 0)
         {
-            if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
+            if (CharacterState.waiting == character.charState)
             {
                 Vector3 pos = transform.GetChild(route[0]).position;
                 currentSpace = route[0];
@@ -43,13 +46,42 @@ public class board : MonoBehaviour
                 character.MovePlayer(pos);
             }
         }
+
+        if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
+        {
+            //Erstma so, aber OnMouseDown is vllt gut wegen UI maybe dunno... oder halt mit state
+            if (Input.GetMouseButtonDown(0))
+            {
+                Clicked();
+            }
+        }
     }
 
-    public void MoveToSpace(string childString)
+    void Clicked()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            var target = hit.collider.GetComponent<Space>();
+            if (!target)
+                { return; }
+            //Debug.Log(hit.collider.gameObject.transform.position);
+
+            //var pos = hit.collider.gameObject.transform.position;
+            //Debug.Log("pos: " + pos);
+            //character.MovePlayer(pos);
+            MoveToSpace(target);
+        }
+    }
+
+    public void MoveToSpace(Space target)
     {
         print("--------------");
         ResetVisited();
-        targetSpace = GetChildID(childString);
+        targetSpace = GetChildID(target.transform);
         List<int> ReturnList = new List<int>();
         ReturnList = GetBestNeighbour(currentSpace);
         if (ReturnList[0] < 0)
@@ -163,11 +195,35 @@ public class board : MonoBehaviour
         return ID;
     }
 
+    private int GetChildID(Transform t)
+    {
+        int ID = -1;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (t == transform.GetChild(i))
+            {
+                ID = i;
+                return ID;
+            }
+        }
+        if (ID == -1)
+        {
+            throw new System.Exception("gameobject not child of this board");
+        }
+        return ID;
+    }
+
     private void ResetVisited()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).GetComponent<Space>().visited = false;
         }
+    }
+
+    public void MarkAsNeighbours(Space a, Space b)
+    {
+        a.neighbourList.Add(b.gameObject);
+        b.neighbourList.Add(a.gameObject);
     }
 }

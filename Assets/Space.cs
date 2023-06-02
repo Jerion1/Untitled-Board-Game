@@ -1,55 +1,63 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Space : MonoBehaviour
 {
-    Character character;
-    board board;
+    //Character character;
+    //board board;
     public bool startSpace;
     public string[] neighbours;
     public bool visited = false;
+    public GameObject linePrefab;
+    public List<GameObject> neighbourList;
 
-    private bool canBeClicked;
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         board = GameObject.FindGameObjectWithTag("Fields").GetComponent<board>();
     }
 
-    // Update is called once per frame
+    Update is called once per frame
     void Update()
     {
-        canBeClicked = true;
-    }
 
+    }*/
 
-    void Clicked()
+    private void OnDrawGizmosSelected()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit = new RaycastHit();
-
-        if (Physics.Raycast(ray, out hit))
+        foreach (var neighbour in neighbourList)
         {
-
-            //Debug.Log(hit.collider.gameObject.transform.position);
-            var target = hit.collider.gameObject.name;
-
-            var pos = hit.collider.gameObject.transform.position;
-            Debug.Log("pos: " + pos);
-            //character.MovePlayer(pos);
-            board.MoveToSpace(transform.name);
-        }
-    }
-    private void OnMouseDown()
-    {
-        if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
-        {
-            if (canBeClicked)
+            if (neighbour != null)
             {
-                canBeClicked = false;
-                Clicked();
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(transform.position, neighbour.transform.position);
             }
         }
+    }
+
+    public void BuildLinesToNeighbours()
+    {
+        foreach (var neighbour in neighbourList)
+        {
+            if (neighbour != null)
+            {
+                BuildMeshLine(transform.position, neighbour.transform.position);
+            }
+        }
+    }
+
+    private void BuildMeshLine(Vector3 from, Vector3 to)
+    {
+        var LineVec = (to - from);
+        var lineobj = Instantiate(linePrefab, from, Quaternion.LookRotation(LineVec), gameObject.transform);
+        lineobj.transform.localScale = new Vector3(1, 1, LineVec.magnitude);
+    }
+
+    public void BuildNeighbour() {
+        var instance = Instantiate(GetComponentInParent<board>().SpacePrefab,transform.position + new Vector3(5,0,0),Quaternion.identity,transform.parent);
+        instance.name = "Plane " + transform.parent.childCount;
+        GetComponentInParent<board>().MarkAsNeighbours(gameObject.GetComponent<Space>(), instance.GetComponent<Space>());
     }
 }
