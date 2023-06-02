@@ -10,11 +10,11 @@ public class SpaceEditorScript : Editor
 {
     Space myScript;
     List<Transform> potentialneighbours;
-    board parentBoard;
+    Board parentBoard;
     void OnEnable()
     {
         myScript = (Space)target;
-        parentBoard = myScript.GetComponentInParent<board>();
+        parentBoard = myScript.GetComponentInParent<Board>();
 
         potentialneighbours = new List<Transform>();
         if (parentBoard )

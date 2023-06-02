@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class board : MonoBehaviour
+public class Board : MonoBehaviour
 {
     Character character;
     private int currentSpace;
@@ -47,7 +48,7 @@ public class board : MonoBehaviour
             }
         }
 
-        if (CharacterState.waiting == character.gameObject.GetComponent<Character>().charState)
+        if (CharacterState.waiting == character.charState)
         {
             //Erstma so, aber OnMouseDown is vllt gut wegen UI maybe dunno... oder halt mit state
             if (Input.GetMouseButtonDown(0))
@@ -61,18 +62,10 @@ public class board : MonoBehaviour
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             var target = hit.collider.GetComponent<Space>();
-            if (!target)
-                { return; }
-            //Debug.Log(hit.collider.gameObject.transform.position);
-
-            //var pos = hit.collider.gameObject.transform.position;
-            //Debug.Log("pos: " + pos);
-            //character.MovePlayer(pos);
+            if (!target) { return; }
             MoveToSpace(target);
         }
     }
@@ -82,7 +75,7 @@ public class board : MonoBehaviour
         print("--------------");
         ResetVisited();
         targetSpace = GetChildID(target.transform);
-        List<int> ReturnList = new List<int>();
+        List<int> ReturnList;
         ReturnList = GetBestNeighbour(currentSpace);
         if (ReturnList[0] < 0)
         {
@@ -103,13 +96,14 @@ public class board : MonoBehaviour
     {
         int BestDepth = -1;
         List<int> BestDepthList = new List<int>();
-        if (!transform.GetChild(from).GetComponent<Space>().visited)
+        if (transform.GetChild(from).GetComponent<Space>().visited == false)
         {
-            string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
-
-            for (int i = 0; i < neighbourNames.Length; i++)
+//            string[] neighbourNames = transform.GetChild(from).GetComponent<Space>().neighbours;
+            GameObject[] neighbours = transform.GetChild(from).GetComponent<Space>().neighbourList.ToArray();
+            for (int i = 0; i < neighbours.Length; i++)
             {
-                int id = GetChildID(neighbourNames[i]);
+                if (neighbours[i] == null) { continue; }
+                int id = GetChildID(neighbours[i].transform);
                 print("id: " + id + ", target: " + targetSpace);
 
                 if (id == targetSpace)
@@ -172,6 +166,7 @@ public class board : MonoBehaviour
         return BestDepthList;
     }
 
+    /*
     private int GetChildID(string spaceName)
     {
         int ID = -1;
@@ -193,7 +188,7 @@ public class board : MonoBehaviour
         }
 
         return ID;
-    }
+    }*/
 
     private int GetChildID(Transform t)
     {

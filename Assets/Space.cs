@@ -7,7 +7,7 @@ public class Space : MonoBehaviour
     //Character character;
     //board board;
     public bool startSpace;
-    public string[] neighbours;
+    //public string[] neighbours;
     public bool visited = false;
     public GameObject linePrefab;
     public List<GameObject> neighbourList;
@@ -27,12 +27,13 @@ public class Space : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        foreach (var neighbour in neighbourList)
+        var offset = Vector3.one * 0.5f;
+        for ( int i = 0; i < neighbourList.Count; i++)
         {
-            if (neighbour != null)
+            if (neighbourList[i] != null)
             {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(transform.position, neighbour.transform.position);
+                Gizmos.color = Color.HSVToRGB(Mathf.Repeat((GetInstanceID())*0.8f+i*0.2f,1),1,1);
+                Gizmos.DrawLine(transform.position + offset, neighbourList[i].transform.position - offset+Vector3.up);
             }
         }
     }
@@ -56,8 +57,8 @@ public class Space : MonoBehaviour
     }
 
     public void BuildNeighbour() {
-        var instance = Instantiate(GetComponentInParent<board>().SpacePrefab,transform.position + new Vector3(5,0,0),Quaternion.identity,transform.parent);
+        var instance = Instantiate(GetComponentInParent<Board>().SpacePrefab,transform.position + new Vector3(5,0,0),Quaternion.identity,transform.parent);
         instance.name = "Plane " + transform.parent.childCount;
-        GetComponentInParent<board>().MarkAsNeighbours(gameObject.GetComponent<Space>(), instance.GetComponent<Space>());
+        GetComponentInParent<Board>().MarkAsNeighbours(gameObject.GetComponent<Space>(), instance.GetComponent<Space>());
     }
 }
