@@ -7,9 +7,10 @@ public class Character : MonoBehaviour
 {
     public float speed = 10f;
     public Vector3 targetPosition;
-    public float smoothTime = 0.5f;
-    public bool moving = false;
-    
+    public float smoothTime = 0.1f;
+    public float rotationSpeed = 1.0f;
+
+
     private Animator animator;
     
     public CharacterState charState;
@@ -29,25 +30,28 @@ public class Character : MonoBehaviour
     Vector3 velocity;
     void Update()
     {
-        if (Vector3.Distance(transform.position, targetPosition) > 0.02f)
+        if (Vector3.Distance(transform.position, targetPosition) > 0.5f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, speed);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, speed, Time.deltaTime);
+            var angle = Vector3.SignedAngle(transform.forward, (targetPosition - transform.position), Vector3.up);
+            transform.Rotate(Vector3.up, angle * rotationSpeed * Time.deltaTime);
+        }
+        else if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, speed, Time.deltaTime);
+            charState = CharacterState.waiting;
         }
         else
         {
             transform.position = targetPosition;
-            if (charState == CharacterState.moving)
-            {
-                charState = CharacterState.waiting;
-                animator.SetBool("move", false);
-            }
+            charState = CharacterState.waiting;
+            animator.SetBool("move", false);
         }
     }
 
     public void MovePlayer(Vector3 goal)
     {
-        //Debug.Log(x);
-        //goal.y += 0.95f;
+        //if (goal == targetPosition) { return; }
         targetPosition = goal;
         charState = CharacterState.moving;
         animator.SetBool("move", true);
