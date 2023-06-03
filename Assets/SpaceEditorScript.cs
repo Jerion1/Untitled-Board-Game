@@ -4,8 +4,11 @@ using UnityEditor;
 using Unity.VisualScripting.FullSerializer;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using System.Linq;
+using Unity.VisualScripting;
 
 [CustomEditor(typeof(Space))]
+[CanEditMultipleObjects]
 public class SpaceEditorScript : Editor
 {
     Space myScript;
@@ -28,6 +31,29 @@ public class SpaceEditorScript : Editor
 
     public override void OnInspectorGUI()
     {
+        if (Selection.objects.Length > 1)
+        {
+            if (GUILayout.Button("Selected miteinander verbinden"))
+            {
+                List<Space> SelectedSpaces = new();
+                foreach (Object o in Selection.objects)
+                {
+                    SelectedSpaces.Add(o.GetComponent<Space>());
+                }
+                foreach (Space s in SelectedSpaces)
+                {
+                    foreach (Space s_inner in SelectedSpaces)
+                    {
+                        if (s_inner != s)
+                        {
+                            s.neighbourList.Add(s_inner.gameObject);
+                        }
+                    }
+                }
+            }
+            return;
+        }
+
         DrawDefaultInspector();
         GUILayout.Label("Mesh platzieren muss noch ausgebaut werden");
         if (parentBoard) {
@@ -55,6 +81,7 @@ public class SpaceEditorScript : Editor
 
     void OnSceneGUI()
     {
+        if (Selection.objects.Length > 1) { return; }
         GUI.skin.label.richText = true;
         foreach (Transform t in potentialneighbours) {
             if (t != null)

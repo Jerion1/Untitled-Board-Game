@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Space : MonoBehaviour
@@ -57,7 +58,9 @@ public class Space : MonoBehaviour
     }
 
     public void BuildNeighbour() {
-        var instance = Instantiate(GetComponentInParent<Board>().SpacePrefab,transform.position + new Vector3(5,0,0),Quaternion.identity,transform.parent);
+        //var instance = Instantiate(GetComponentInParent<Board>().SpacePrefab,transform.position + new Vector3(5,0,0),Quaternion.identity,transform.parent);
+        var instance = PrefabUtility.InstantiatePrefab(GetComponentInParent<Board>().SpacePrefab, transform.parent);
+        instance.GetComponent<Transform>().position = transform.position + new Vector3(5,0,0);
         instance.name = "Plane " + transform.parent.childCount;
         GetComponentInParent<Board>().MarkAsNeighbours(gameObject.GetComponent<Space>(), instance.GetComponent<Space>());
     }
