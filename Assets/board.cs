@@ -218,7 +218,7 @@ public class Board : MonoBehaviour
 
     public void MarkAsNeighbours(Space a, Space b)
     {
-        a.neighbourList.Add(b.gameObject);
-        b.neighbourList.Add(a.gameObject);
+        if (!a.neighbourList.Contains(b.gameObject)) { a.neighbourList.Add(b.gameObject); }
+        if (!b.neighbourList.Contains(a.gameObject)) { b.neighbourList.Add(a.gameObject); }
     }
 }

@@ -14,13 +14,14 @@ public class SpaceEditorScript : Editor
     Space myScript;
     List<Transform> potentialneighbours;
     Board parentBoard;
+    SerializedProperty neighbours;
     void OnEnable()
     {
         myScript = (Space)target;
         parentBoard = myScript.GetComponentInParent<Board>();
 
         potentialneighbours = new List<Transform>();
-        if (parentBoard )
+        if (parentBoard)
         {
             for (int i = 0; i < myScript.transform.parent.childCount; i++)
             {
@@ -31,6 +32,7 @@ public class SpaceEditorScript : Editor
 
     public override void OnInspectorGUI()
     {
+
         if (Selection.objects.Length > 1)
         {
             if (GUILayout.Button("Selected miteinander verbinden"))
@@ -42,11 +44,17 @@ public class SpaceEditorScript : Editor
                 }
                 foreach (Space s in SelectedSpaces)
                 {
+                    SerializedObject so = new SerializedObject(s);
+                    neighbours = so.FindProperty("neighbourList");
+                    so.Update();
                     foreach (Space s_inner in SelectedSpaces)
                     {
-                        if (s_inner != s)
+                        if (s_inner != s && !s.neighbourList.Contains(s_inner.gameObject))
                         {
-                            s.neighbourList.Add(s_inner.gameObject);
+                            neighbours.InsertArrayElementAtIndex(neighbours.arraySize);
+                            so.ApplyModifiedProperties();
+                            s.neighbourList[s.neighbourList.Count - 1] = s_inner.gameObject;
+                            
                         }
                     }
                 }
@@ -66,6 +74,14 @@ public class SpaceEditorScript : Editor
                 }
                 if (GUILayout.Button("Neuer Nachbar", GUILayout.MaxWidth(200), GUILayout.MinWidth(100)))
                 {
+                    //neighbourList von diesem Space "dirty" machen
+                    SerializedObject so = new SerializedObject(target);
+                    neighbours = so.FindProperty("neighbourList");
+                    so.Update();
+                    neighbours.InsertArrayElementAtIndex(neighbours.arraySize);
+                    neighbours.DeleteArrayElementAtIndex(neighbours.arraySize-1);
+                    so.ApplyModifiedProperties();
+                    //Nachbar hinzu
                     myScript.BuildNeighbour();
                 }
                 GUILayout.EndHorizontal();
@@ -76,7 +92,6 @@ public class SpaceEditorScript : Editor
         } else {
             EditorGUILayout.HelpBox("Braucht ein Board als Parent", MessageType.Error);
         }
-
     }
 
     void OnSceneGUI()
